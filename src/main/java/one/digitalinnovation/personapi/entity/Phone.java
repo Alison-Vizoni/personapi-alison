@@ -31,6 +31,4 @@ public class Phone {
 
     @Column(nullable = false)
     private String number;
-
-
 }

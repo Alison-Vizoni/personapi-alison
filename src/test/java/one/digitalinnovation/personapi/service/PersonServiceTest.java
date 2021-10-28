@@ -4,13 +4,10 @@ import one.digitalinnovation.personapi.dto.request.PersonDTO;
 import one.digitalinnovation.personapi.dto.response.MessageResponseDTO;
 import one.digitalinnovation.personapi.entity.Person;
 import one.digitalinnovation.personapi.repository.PersonRepository;
-import one.digitalinnovation.personapi.utils.PersonUtils;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static one.digitalinnovation.personapi.utils.PersonUtils.*;
@@ -27,16 +24,16 @@ public class PersonServiceTest {
     private PersonService personService;
 
     @Test
-    void testGivenPersonDTOThenReturnSavedMessage() {
+    public void testGivenNewPersonDTOThenReturnSavedMessage() {
         PersonDTO personDTO = createFakeDTO();
         Person expectedSavedPerson = createFakeEntity();
 
         when(personRepository.save(any(Person.class))).thenReturn(expectedSavedPerson);
 
         MessageResponseDTO expectedSuccessMessage = createExpectedMessageResponse(expectedSavedPerson.getId());
-        MessageResponseDTO succesMessage = personService.createPerson(personDTO);
+        MessageResponseDTO successMessage = personService.createPerson(personDTO);
 
-        assertEquals(expectedSuccessMessage, succesMessage);
+        assertEquals(expectedSuccessMessage, successMessage);
     }
 
     private MessageResponseDTO createExpectedMessageResponse(Long id) {
