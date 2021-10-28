@@ -13,6 +13,7 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "card")
 public class Card {
 
     @Id
@@ -32,4 +33,7 @@ public class Card {
     @Column(nullable = false)
     private CardType cardType;
 
+    @ManyToOne
+    @JoinColumn(name = "id_person")
+    private Person person;
 }
