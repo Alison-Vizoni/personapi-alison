@@ -32,8 +32,4 @@ public class Card {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private CardType cardType;
-
-    @ManyToOne
-    @JoinColumn(name = "id_person")
-    private Person person;
 }

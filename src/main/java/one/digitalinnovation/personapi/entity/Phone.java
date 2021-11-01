@@ -27,7 +27,4 @@ public class Phone {
     @Column(nullable = false)
     private String number;
 
-    @ManyToOne
-    @JoinColumn(name = "id_person")
-    private Person person;
 }
