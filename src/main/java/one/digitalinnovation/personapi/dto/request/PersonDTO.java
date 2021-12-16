@@ -37,6 +37,5 @@ public class PersonDTO {
     @NotEmpty
     private List<PhoneDTO> phones;
 
-    @NotEmpty
     private List<CardDTO> cards;
 }

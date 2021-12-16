@@ -3,13 +3,16 @@ package one.digitalinnovation.personapi.service;
 import lombok.AllArgsConstructor;
 import one.digitalinnovation.personapi.dto.request.PersonDTO;
 import one.digitalinnovation.personapi.dto.response.MessageResponseDTO;
+import one.digitalinnovation.personapi.entity.Card;
 import one.digitalinnovation.personapi.entity.Person;
 import one.digitalinnovation.personapi.exception.PersonNotFoundException;
 import one.digitalinnovation.personapi.mapper.PersonMapper;
+import one.digitalinnovation.personapi.repository.CardRepository;
 import one.digitalinnovation.personapi.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,13 +21,22 @@ import java.util.stream.Collectors;
 public class PersonService {
 
     private PersonRepository personRepository;
+    private CardRepository cardRepository;
 
     private final PersonMapper personMapper = PersonMapper.INSTANCE;
 
     public MessageResponseDTO createPerson(PersonDTO personDTO) {
         Person personToSave = personMapper.toModel(personDTO);
-
+        List<Card> cards = new ArrayList<>();
+        if(personToSave.getCards() != null) {
+            for (Card card : personToSave.getCards()) {
+                card.setPerson(personToSave);
+                cards.add(card);
+            }
+        }
         Person savedPerson = personRepository.save(personToSave);
+        if (!cards.isEmpty()) cardRepository.saveAll(cards);
+
         return createMessageResponse(savedPerson.getId(), "Created person with ID ");
     }
 
